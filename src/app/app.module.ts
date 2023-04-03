@@ -24,6 +24,10 @@ const appRoutes: Routes = [
     {
         path      : 'users',
         component : UsersComponent
+    },
+    {
+        path      : 'users/:id/:name', // Similar to Laravel's way of routing. [ Route::get('/users/{id}/{name}') ]
+        component : UsersComponent
     }
 ];
 
