@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 import { Server } from '../server.model';
@@ -14,7 +14,8 @@ export class ServerComponent implements OnInit {
 
     constructor(
         private serversService: ServersService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private router: Router
     ) {
         this.server = this.serversService.getServer(+this.activatedRoute.snapshot.params['id']);
     }
@@ -25,4 +26,11 @@ export class ServerComponent implements OnInit {
         });
     }
 
+    onEditServer() {
+        // Since this component is a child of the parent route (/servers) and the /servers/:id route,
+        //    we can just simply add the "edit" string literal and it will automatically append it to the existing route
+        //    (which in this case, the /servers/:id route).
+        // The resulting route would be "/servers/:id/edit".
+        this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
+    }
 }
