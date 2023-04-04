@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 import { Server } from '../server.model';
@@ -13,13 +14,28 @@ export class EditServerComponent implements OnInit {
     serverName = '';
     serverStatus = '';
 
-    constructor(private serversService: ServersService) {
+    constructor(
+        private serversService: ServersService,
+        private activatedRoute: ActivatedRoute
+    ) {
         this.server = this.serversService.getServer(1);
     }
 
     ngOnInit() {
         this.serverName = this.server.name;
         this.serverStatus = this.server.status;
+
+        // non-reactive approach
+        // console.log(this.activatedRoute.snapshot.queryParams);
+        // console.log(this.activatedRoute.snapshot.fragment);
+
+        // reactive approach (recommended)
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            console.log(params);
+        });
+        this.activatedRoute.fragment.subscribe((fragment) => {
+            console.log(fragment);
+        });
     }
 
     onUpdateServer() {
