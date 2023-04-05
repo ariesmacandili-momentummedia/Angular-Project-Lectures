@@ -31,6 +31,6 @@ export class ServerComponent implements OnInit {
         //    we can just simply add the "edit" string literal and it will automatically append it to the existing route
         //    (which in this case, the /servers/:id route).
         // The resulting route would be "/servers/:id/edit".
-        this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['edit'], { relativeTo: this.activatedRoute, queryParamsHandling: 'preserve' });
     }
 }
