@@ -7,3 +7,19 @@
 >
     Load Server 1
 </button>
+
+<button
+    class="btn btn-default"
+    *ngIf="!authService.loggedIn"
+    (click)="onLogin()"
+>
+    Login
+</button>
+
+<button
+    class="btn btn-default"
+    (click)="onLogout()"
+    *ngIf="authService.loggedIn"
+>
+    Logout
+</button>
