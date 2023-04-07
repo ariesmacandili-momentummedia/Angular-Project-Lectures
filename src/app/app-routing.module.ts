@@ -9,6 +9,7 @@ import { UserComponent } from "./users/user/user.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { AuthGuard } from "./auth-guard.service";
 import { CanDeactivateGuard } from "./servers/edit-server/can-deactivate.guard";
+import { ErrorPageComponent } from "./error-page/error-page.component";
 
 const appRoutes: Routes = [
     {
@@ -44,7 +45,10 @@ const appRoutes: Routes = [
     },
     {
         path       : 'not-found',
-        component  : PageNotFoundComponent
+        component  : ErrorPageComponent,
+        data       : {
+            message: 'Aw, snap! Page was not found!'
+        }
     },
     {
         path       : '**',
