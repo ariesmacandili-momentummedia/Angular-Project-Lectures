@@ -1,3 +1,21 @@
 .container {
     margin-top: 30px;
-  }
+}
+
+/*
+    - .ng-touched is a class
+       added to the element
+       when the user has
+       interacted with it.
+
+    - .ng-invalid is a class
+       added to the element
+       when the user has
+       interacted with it
+       and the value is
+       invalid.
+*/
+
+.ng-touched.ng-invalid:not(form) {
+    border: 1px solid red;
+}
