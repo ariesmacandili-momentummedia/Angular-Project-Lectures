@@ -45,6 +45,27 @@
                             Please enter a valid email.
                         </span>
                     </div>
+
+                    <div
+                        class="form-check"
+                        *ngFor="let gender of genders;"
+                    >
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="gender"
+                            class="form-check-input"
+                            [ngModel]="'Male'"
+                            [value]="gender"
+                            required
+                        />
+                        <label
+                            for="gender"
+                            class="form-check-label"
+                        >
+                            {{ gender }}
+                        </label>
+                    </div>
                 </div>
                 <p
                     class="help-block"
