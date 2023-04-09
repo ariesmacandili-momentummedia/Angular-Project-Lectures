@@ -16,6 +16,6 @@
        invalid.
 */
 
-.ng-touched.ng-invalid:not(form) {
+.ng-touched.ng-invalid:not(form):not([ngmodelgroup]) {
     border: 1px solid red;
 }
