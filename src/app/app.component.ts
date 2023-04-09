@@ -16,5 +16,6 @@ export class AppComponent {
     onSubmit() {
         console.log('Submitted!');
         console.log(this.userForm.value);
+        console.log(this.userForm.valid);
     }
 }
