@@ -13,6 +13,16 @@ export class AppComponent {
 
     genders = ['Male', 'Female'];
 
+    submitted = false;
+
+    user = {
+        username: '',
+        email: '',
+        gender: '',
+        secretQuestion: '',
+        secretAnswer : ''
+    }
+
     suggestUserName() {
         const suggestedName = 'Superuser';
         this.userForm.form.patchValue({
@@ -23,8 +33,14 @@ export class AppComponent {
     }
 
     onSubmit() {
-        console.log('Submitted!');
-        console.log(this.userForm.value);
-        console.log(this.userForm.valid);
+        this.submitted = true;
+
+        this.user.username = this.userForm.value.userData.username;
+        this.user.email = this.userForm.value.userData.email;
+        this.user.gender = this.userForm.value.userData.gender;
+        this.user.secretQuestion = this.userForm.value.secret;
+        this.user.secretAnswer = this.userForm.value.questionAnswer;
+
+        this.userForm.reset();
     }
 }
