@@ -2,6 +2,6 @@
     margin-top: 30px;
 }
 
-.ng-invalid.ng-touched:not(form) {
+.ng-touched.ng-invalid:not(form):not([formgroupname]) {
     border: 1px solid red;
 }
