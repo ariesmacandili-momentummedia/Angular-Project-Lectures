@@ -19,6 +19,12 @@
                         formControlName="username"
                     />
                 </div>
+                <span
+                    *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched"
+                    class="help-block"
+                >
+                    Please enter a username.
+                </span>
                 <div class="form-group">
                     <label
                         for="email"
@@ -33,6 +39,12 @@
                         formControlName="email"
                     />
                 </div>
+                <span
+                    *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+                    class="help-block"
+                >
+                    Please enter a valid email.
+                </span>
                 <div
                     class="radio"
                     *ngFor="let gender of genders;"
@@ -46,6 +58,12 @@
                         />{{ gender }}
                     </label>
                 </div>
+                <span
+                    *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched"
+                    class="help-block"
+                >
+                    Please select a gender.
+                </span>
                 <button
                     type="submit"
                     class="btn btn-primary"
