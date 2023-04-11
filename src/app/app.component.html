@@ -66,6 +66,28 @@
                         Please select a gender.
                     </span>
                 </div>
+                <div formArrayName="hobbies">
+                    <h4>Your Hobbies</h4>
+                    <button
+                        type="button"
+                        class="btn btn-default"
+                        (click)="onAddHobby()"
+                    >
+                        Add Hobby
+                    </button>
+                    <div
+                        class="form-group"
+                        *ngFor="let hobbyControl of hobbyControls; let i = index;"
+                    >
+                        <input
+                            type="text"
+                            name="hobby"
+                            id="hobby"
+                            class="form-control"
+                            [formControlName]="i"
+                        />
+                    </div>
+                </div>
                 <button
                     type="submit"
                     class="btn btn-primary"
