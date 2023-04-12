@@ -86,5 +86,8 @@ export class AppComponent implements OnInit {
 
     onSubmit() {
         console.log(this.signupForm.value);
+        // We can pass an object as an argument to the reset function which will
+        // define the FormControls we do not want resetting.
+        this.signupForm.reset();
     }
 }
