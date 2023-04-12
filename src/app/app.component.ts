@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -18,7 +19,11 @@ export class AppComponent implements OnInit {
                     Validators.required,
                     this.forbiddenNames.bind(this) // It is mandatory to use bind and add "this".
                 ]),
-                'email'    : new FormControl(null, [Validators.required, Validators.email]),
+                'email'    : new FormControl(
+                    null,
+                    [Validators.required, Validators.email],
+                    this.forbiddenEmails.bind(this)  // It is mandatory to use bind and add "this".
+                ),
                 'gender'   : new FormControl('Male')
             }),
             'hobbies'  : new FormArray([])
@@ -30,6 +35,18 @@ export class AppComponent implements OnInit {
             return {'nameIsForbidden': true}; // The key is the name of the short error code. Key name can be anything.
         }
         return null; // This is fixed as Angular's spec. If null is returned, it means that the validation is passed.
+    }
+
+    forbiddenEmails(control: AbstractControl): Promise<any> | Observable<any> {
+        return new Promise<any>((resolve, reject) => {
+            setTimeout(() => {
+                if (control.value === 'test@test.com') {
+                    resolve({'emailIsForbidden': true});
+                } else {
+                    resolve(null);
+                }
+            }, 1500);
+        });
     }
 
     get hobbyControls() {
