@@ -1,7 +1,90 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-            <form>
+            <form
+                [formGroup]="form"
+                (ngSubmit)="onSubmit()"
+            >
+                <div class="form-group">
+                    <label for="projectName">Project Name</label>
+                    <input
+                        type="text"
+                        name="projectName"
+                        id="projectName"
+                        class="form-control"
+                        placeholder="Project Name"
+                        formControlName="projectName"
+                    />
+                </div>
+                <div
+                    class="help-block"
+                    *ngIf="form.get('projectName')?.touched && form.get('projectName')?.invalid"
+                >
+                    <span *ngIf="form.get('projectName')?.errors?.['required']">
+                        Please enter a project name.
+                    </span>
+                    <span *ngIf="form.get('projectName')?.errors?.['projectNameIsForbidden']">
+                        The project name entered is invalid.
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label
+                        for="email"
+                    >
+                        Email
+                    </label>
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        placeholder="Email"
+                        formControlName="email"
+                    />
+                </div>
+                <div
+                    class="help-block"
+                    *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+                >
+                    <span *ngIf="form.get('email')?.errors?.['required']">
+                        Please enter an email.
+                    </span>
+                    <span *ngIf="form.get('email')?.errors?.['email']">
+                        Please enter a valid email.
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group">
+                        <label
+                            for="projectStatus"
+                        >
+                            Project Status
+                        </label>
+                        <select
+                            name="projectStatus"
+                            id="projectStatus"
+                            class="form-control"
+                            formControlName="projectStatus"
+                        >
+                            <option
+                                *ngFor="let status of ['Stable', 'Critical', 'Finished']"
+                                [value]="status"
+                            >
+                                {{ status }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!form.valid"
+                >
+                    Submit
+                </button>
 
             </form>
         </div>
