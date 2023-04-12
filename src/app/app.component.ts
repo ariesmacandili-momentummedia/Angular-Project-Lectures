@@ -14,7 +14,10 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.signupForm = new FormGroup({
             'userData' : new FormGroup({
-                'username' : new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]), // It is mandatory to use bind and add "this".
+                'username' : new FormControl(null, [
+                    Validators.required,
+                    this.forbiddenNames.bind(this) // It is mandatory to use bind and add "this".
+                ]),
                 'email'    : new FormControl(null, [Validators.required, Validators.email]),
                 'gender'   : new FormControl('Male')
             }),
