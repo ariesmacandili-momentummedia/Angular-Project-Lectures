@@ -28,6 +28,26 @@ export class AppComponent implements OnInit {
             }),
             'hobbies'  : new FormArray([])
         });
+
+        // Observing the changes to the entire FormGroup instance.
+        this.signupForm.valueChanges.subscribe((formValues: Object) => {
+            console.log(formValues);
+        });
+
+        // Observing the changes on an individual FormControl inside the FormGroup instance.
+        this.signupForm.get('userData.username')?.valueChanges.subscribe((value) => {
+            console.log(value);
+        });
+
+        // Observing the validity status of the entire FormGroup instance.
+        this.signupForm.statusChanges.subscribe((formValues: Object) => {
+            console.log(formValues);
+        });
+
+        // Observing the validity status of an individual FormControl inside the FormGroup instance.
+        this.signupForm.get('userData.username')?.statusChanges.subscribe((value) => {
+            console.log(value);
+        });
     }
 
     forbiddenNames(control: FormControl): {[s: string]: boolean} | null { // Signature is mandatory.
