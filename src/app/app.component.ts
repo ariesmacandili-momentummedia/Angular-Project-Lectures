@@ -48,6 +48,12 @@ export class AppComponent implements OnInit {
         this.signupForm.get('userData.username')?.statusChanges.subscribe((value) => {
             console.log(value);
         });
+
+        // this.signupForm.patchValue({
+        //     'userData': {
+        //         'username': 'Max'
+        //     }
+        // });
     }
 
     forbiddenNames(control: FormControl): {[s: string]: boolean} | null { // Signature is mandatory.
