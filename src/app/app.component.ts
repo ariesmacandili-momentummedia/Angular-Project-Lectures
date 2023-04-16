@@ -33,6 +33,12 @@ export class AppComponent {
         }
     ];
 
+    appStatus = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('stable');
+        }, 2000);
+    });
+
     filteredStatus = '';
 
     getStatusClasses(server: { instanceType: string, name: string, status: string, started: Date }) {
