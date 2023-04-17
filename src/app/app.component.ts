@@ -22,6 +22,8 @@ export class AppComponent implements OnInit {
             title   : new FormControl(null, { validators: [Validators.required] }),
             content : new FormControl(null, { validators: [Validators.required] })
         });
+
+        this.fetchPosts();
     }
 
     onCreatePost() {
@@ -37,10 +39,23 @@ export class AppComponent implements OnInit {
 
     onFetchPosts() {
         // Send Http request
+        this.fetchPosts()
     }
 
     onClearPosts() {
         // Send Http request
         this.loadedPosts = [];
+    }
+
+    private fetchPosts() {
+        // Send Http request
+        this.http
+            .get(`${this.apiUrl}/posts.json`)
+            .subscribe((response) => {
+                this.loadedPosts = [];
+                for (const data of Object.values(response)) {
+                    this.loadedPosts.push(data);
+                }
+            });
     }
 }
