@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
@@ -7,15 +8,22 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    form = {} as FormGroup;
+
     loadedPosts = [];
 
     constructor(private http: HttpClient) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.form = new FormGroup({
+            title   : new FormControl(null, { validators: [Validators.required] }),
+            content : new FormControl(null, { validators: [Validators.required] })
+        });
+    }
 
-    onCreatePost(postData: { title: string; content: string }) {
+    onCreatePost() {
         // Send Http request
-        console.log(postData);
+        console.log(this.form.value);
     }
 
     onFetchPosts() {
