@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Post } from './interfaces/post.interface';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +11,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
     form = {} as FormGroup;
 
-    loadedPosts = [];
+    loadedPosts: Post[] = [];
+
+    apiUrl = 'https://udemy-angular-tutorial-5331a-default-rtdb.asia-southeast1.firebasedatabase.app';
 
     constructor(private http: HttpClient) { }
 
@@ -23,7 +26,13 @@ export class AppComponent implements OnInit {
 
     onCreatePost() {
         // Send Http request
-        console.log(this.form.value);
+        this.http
+            .post(`${this.apiUrl}/posts.json`, this.form.value)
+            .subscribe((response) => {
+                console.log(response)
+            });
+
+        this.loadedPosts.push(this.form.value);
     }
 
     onFetchPosts() {
@@ -32,5 +41,6 @@ export class AppComponent implements OnInit {
 
     onClearPosts() {
         // Send Http request
+        this.loadedPosts = [];
     }
 }
