@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
+
 import { Post } from './interfaces/post.interface';
 
 @Component({
@@ -51,11 +53,15 @@ export class AppComponent implements OnInit {
         // Send Http request
         this.http
             .get(`${this.apiUrl}/posts.json`)
-            .subscribe((response) => {
-                this.loadedPosts = [];
-                for (const data of Object.values(response)) {
-                    this.loadedPosts.push(data);
+            .pipe(map((responseData) => {
+                let postsArray: Post[] = [];
+                for (const data of Object.values(responseData)) {
+                    postsArray.push(data);
                 }
+                return postsArray;
+            }))
+            .subscribe((posts) => {
+                this.loadedPosts = posts;
             });
     }
 }
