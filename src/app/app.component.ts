@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
 
     loadedPosts: Post[] = [];
 
+    isFetchingPosts = true;
+
     apiUrl = 'https://udemy-angular-tutorial-5331a-default-rtdb.asia-southeast1.firebasedatabase.app';
 
     constructor(private http: HttpClient) { }
@@ -50,6 +52,8 @@ export class AppComponent implements OnInit {
     }
 
     private fetchPosts() {
+        this.isFetchingPosts = true;
+
         // Send Http request
         this.http
             .get<{ [key: string]: Post }>(`${this.apiUrl}/posts.json`)
@@ -62,6 +66,7 @@ export class AppComponent implements OnInit {
             }))
             .subscribe((posts) => {
                 this.loadedPosts = posts;
+                this.isFetchingPosts = false;
             });
     }
 }
