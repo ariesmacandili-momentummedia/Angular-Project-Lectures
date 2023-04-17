@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     onCreatePost() {
         // Send Http request
         this.http
-            .post(`${this.apiUrl}/posts.json`, this.form.value)
+            .post<{ name: string }>(`${this.apiUrl}/posts.json`, this.form.value)
             .subscribe((response) => {
                 console.log(response)
             });
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
     private fetchPosts() {
         // Send Http request
         this.http
-            .get(`${this.apiUrl}/posts.json`)
+            .get<{ [key: string]: Post }>(`${this.apiUrl}/posts.json`)
             .pipe(map((responseData) => {
                 let postsArray: Post[] = [];
                 for (const data of Object.values(responseData)) {
