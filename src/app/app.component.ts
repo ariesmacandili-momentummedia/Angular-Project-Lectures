@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
     isFetchingPosts = true;
 
-    apiUrl = 'https://udemy-angular-tutorial-5331a-default-rtdb.asia-southeast1.firebasedatabase.app';
+    errorMessage = '';
 
     constructor(private postsService: PostsService) { }
 
@@ -28,6 +28,10 @@ export class AppComponent implements OnInit {
         });
 
         this.onFetchPosts();
+
+        this.postsService.error$.subscribe((error: string) => {
+            this.errorMessage = error;
+        });
 
         this.postsService.isFetchingPosts.subscribe((isFetching) => {
             this.isFetchingPosts = isFetching;
