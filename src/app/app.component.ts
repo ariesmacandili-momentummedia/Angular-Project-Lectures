@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 
 import { Post } from './interfaces/post.interface';
+import { PostsService } from './services/posts.service';
 
 @Component({
     selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
     apiUrl = 'https://udemy-angular-tutorial-5331a-default-rtdb.asia-southeast1.firebasedatabase.app';
 
-    constructor(private http: HttpClient) { }
+    constructor(private postsService: PostsService) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -27,46 +27,25 @@ export class AppComponent implements OnInit {
             content : new FormControl(null, { validators: [Validators.required] })
         });
 
-        this.fetchPosts();
+        this.onFetchPosts();
+
+        this.postsService.isFetchingPosts.subscribe((isFetching) => {
+            this.isFetchingPosts = isFetching;
+            if (isFetching === false) {
+                this.loadedPosts = this.postsService.loadedPosts;
+            }
+        });
     }
 
     onCreatePost() {
-        // Send Http request
-        this.http
-            .post<{ name: string }>(`${this.apiUrl}/posts.json`, this.form.value)
-            .subscribe((response) => {
-                console.log(response)
-            });
-
-        this.loadedPosts.push(this.form.value);
+        this.postsService.createPost(this.form.value);
     }
 
     onFetchPosts() {
-        // Send Http request
-        this.fetchPosts()
+        this.postsService.fetchPosts();
     }
 
     onClearPosts() {
-        // Send Http request
         this.loadedPosts = [];
-    }
-
-    private fetchPosts() {
-        this.isFetchingPosts = true;
-
-        // Send Http request
-        this.http
-            .get<{ [key: string]: Post }>(`${this.apiUrl}/posts.json`)
-            .pipe(map((responseData) => {
-                let postsArray: Post[] = [];
-                for (const data of Object.values(responseData)) {
-                    postsArray.push(data);
-                }
-                return postsArray;
-            }))
-            .subscribe((posts) => {
-                this.loadedPosts = posts;
-                this.isFetchingPosts = false;
-            });
     }
 }
