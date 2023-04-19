@@ -46,6 +46,6 @@ export class AppComponent implements OnInit {
     }
 
     onClearPosts() {
-        this.loadedPosts = [];
+        this.postsService.deletePosts();
     }
 }

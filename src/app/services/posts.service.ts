@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from '../interfaces/post.interface';
-import { Subject, map } from 'rxjs';
+import { Subject, filter, map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +34,11 @@ export class PostsService {
             .get<{ [key: string]: Post }>(`${this.apiUrl}/posts.json`)
             .pipe(map((responseData) => {
                 let postsArray: Post[] = [];
+
+                if (responseData === null) {
+                    return postsArray;
+                }
+
                 for (const data of Object.values(responseData)) {
                     postsArray.push(data);
                 }
@@ -41,6 +46,15 @@ export class PostsService {
             }))
             .subscribe((posts: Post[]) => {
                 this.loadedPosts = posts;
+                this.isFetchingPosts.next(false);
+            });
+    }
+
+    deletePosts() {
+        return this.httpClient
+            .delete(`${this.apiUrl}/posts.json`)
+            .subscribe(() => {
+                this.loadedPosts = [];
                 this.isFetchingPosts.next(false);
             });
     }
