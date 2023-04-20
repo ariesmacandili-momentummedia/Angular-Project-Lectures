@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from '../interfaces/post.interface';
-import { Subject, catchError, throwError , map, Observable } from 'rxjs';
+import { Subject, catchError, throwError , map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +33,17 @@ export class PostsService {
     fetchPosts() {
         this.isFetchingPosts.next(true);
         this.httpClient
-            .get<{ [key: string]: Post }>(`${this.apiUrl}/posts.json`)
+            .get<{ [key: string]: Post }>(
+                `${this.apiUrl}/posts.json`,
+                {
+                    headers: new HttpHeaders({
+                        'Custom-Header': 'Hello'
+                    }),
+                    params: {
+                        print: 'pretty'
+                    }
+                }
+            )
             .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)))
             .pipe(map((responseData) => {
                 let postsArray: Post[] = [];
