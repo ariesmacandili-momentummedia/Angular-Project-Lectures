@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from '../interfaces/post.interface';
-import { Subject, catchError, throwError , map } from 'rxjs';
+import { Subject, catchError, throwError, map, tap} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -65,7 +65,21 @@ export class PostsService {
 
     deletePosts() {
         return this.httpClient
-            .delete(`${this.apiUrl}/posts.json`)
+            .delete(`${this.apiUrl}/posts.json`, {
+                observe: 'events'
+            })
+            .pipe(tap((event: any) => {
+                console.log(event); // Returns an integer value which corresponds to HttpEventType enum value.
+
+                if (event.type === HttpEventType.Sent) {
+                    // The request was sent to the server.
+                }
+
+                if (event.type === HttpEventType.Response) {
+                    // A valid response was received from the back-end server.
+                    console.log(event.body)
+                }
+            }))
             .subscribe(() => {
                 this.loadedPosts = [];
                 this.isFetchingPosts.next(false);
