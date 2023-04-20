@@ -67,6 +67,20 @@
                 [post]="post"
             ></app-post>
         </ul>
-        <p *ngIf="isFetchingPosts === true">Loading...</p>
+        <p *ngIf="isFetchingPosts === true && errorMessage === ''">Loading...</p>
+
+        <div
+            class="alert alert-danger"
+            *ngIf="errorMessage !== ''"
+        >
+            <h1>An error has occurred!</h1>
+            <p>{{ errorMessage }}</p>
+            <button
+                class="btn btn-danger"
+                (click)="onHandleError()"
+            >
+                Okay
+            </button>
+        </div>
     </div>
 </div>

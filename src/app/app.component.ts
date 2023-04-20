@@ -52,4 +52,9 @@ export class AppComponent implements OnInit {
     onClearPosts() {
         this.postsService.deletePosts();
     }
+
+    onHandleError() {
+        this.errorMessage = '';
+        this.isFetchingPosts = false;
+    }
 }
